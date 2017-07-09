@@ -102,7 +102,7 @@ class PriorityQueue:
       
   def getPriority(self,item):
     """
-        Get priority of 'item'. If 
+        Get priority of 'item'. If
     'item' is not in the queue returns None
     """
     if not item in self.dict:
@@ -117,8 +117,8 @@ class PriorityQueue:
     if self.isEmpty(): return None
     (priority,item) = heapq.heappop(self.heap)
     del self.dict[item]
-    return item  
-  
+    return item
+
   def isEmpty(self):
     """
         Returns True if the queue is empty
