@@ -91,7 +91,7 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
   "*** YOUR CODE HERE ***"
-  node =(problem.getStartState(), [])
+  node =(problem.getStartState(), 0)
   if problem.isGoalState(node):
       return node
   edge = util.PriorityQueue()
@@ -104,9 +104,12 @@ def uniformCostSearch(problem):
       visited.append(node)
       for successor, action, stepCost in problem.getSuccessors(node):
           if not successor in visited:
-              actions2 = actions + [action]
-              edge.push((successor, actions2), problem.getCostOfActions(actions2))
-          visited.append(successor)
+              aux = [action,actions]
+              edge.push((successor, aux), problem.getCostOfActions(aux))
+          elif successor in visited > stepCost:
+              edge.push(successor, stepCost)
+
+          #visited.append(successor)
 
   util.raiseNotDefined()
 
