@@ -67,6 +67,20 @@ def depthFirstSearch(problem):
   the goal.  Make sure to implement a graph search algorithm [Fig. 3.18].
   """
   "*** YOUR CODE HERE ***"
+  node = (problem.getStartState(), [])
+  if problem.isGoalState(node):
+      return node
+  edge = util.Stack()
+  edge.push(node)
+  visited = []
+  while not edge.isEmpty():
+      node, actions = edge.pop()
+      visited.append(node)
+      for successor, action, stepCost in problem.getSuccessors(node):
+          if successor not in visited and edge:
+              if problem.isGoalState(successor):
+                  return actions + [action]
+              edge.push((successor, actions + [action]))
   util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
@@ -82,7 +96,7 @@ def breadthFirstSearch(problem):
       node, actions = edge.pop()
       visited.append(node)
       for successor, action, stepCost in problem.getSuccessors(node):
-          if not successor in visited and edge:
+          if successor not in visited and edge:
               if problem.isGoalState(successor):
                   return actions + [action]
               edge.push((successor, actions + [action]))
@@ -91,7 +105,7 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
   "*** YOUR CODE HERE ***"
-  node =(problem.getStartState(), [])
+  node = (problem.getStartState(), [])
   if problem.isGoalState(node):
       return node
   edge = util.PriorityQueue()
@@ -103,9 +117,8 @@ def uniformCostSearch(problem):
           return actions
       visited.append(node)
       for successor, action, stepCost in problem.getSuccessors(node):
-          if not successor in visited:
-              actions2 = actions + [action]
-              edge.push((successor, actions2), problem.getCostOfActions(actions2))
+          if successor not in visited:
+              edge.push((successor, actions), problem.getCostOfActions(action))
           visited.append(successor)
 
   util.raiseNotDefined()
