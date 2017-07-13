@@ -87,11 +87,9 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
   "Search the shallowest nodes in the search tree first. [p 74]"
   "*** YOUR CODE HERE ***"
-  node = (problem.getStartState(), [])
-  if problem.isGoalState(node):
-      return node
+  nodeStart = (problem.getStartState(), [])
   edge = util.Queue()
-  edge.push(node)
+  edge.push(nodeStart)
   visited = []
   while not edge.isEmpty():
       node, actions = edge.pop()
@@ -101,6 +99,7 @@ def breadthFirstSearch(problem):
               if problem.isGoalState(successor):
                   return actions + [action]
               edge.push((successor, actions + [action]))
+              visited.append(successor)
   print 'fim'
   util.raiseNotDefined()
       
@@ -120,8 +119,8 @@ def uniformCostSearch(problem):
       visited.append(node)
       for successor, action, stepCost in problem.getSuccessors(node):
           if successor not in visited:
-              new_actions = actions + (action,)
-              edge.push((successor, new_actions), problem.getCostOfActions(new_actions))
+              setActions = actions + (action,)
+              edge.push((successor, setActions), problem.getCostOfActions(setActions))
           visited.append(successor)
 
   util.raiseNotDefined()
@@ -136,7 +135,22 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
   "Search the node that has the lowest combined cost and heuristic first."
   "*** YOUR CODE HERE ***"
-
+  node = (problem.getStartState(), ())
+  if problem.isGoalState(node):
+      return node
+  edge = util.PriorityQueue()
+  edge.push(node, heuristic(problem.getStartState(), problem))
+  visited = []
+  while not edge.isEmpty():
+      node, actions = edge.pop()
+      if problem.isGoalState(node):
+          return actions
+      visited.append(node)
+      for successor, action, stepCost in problem.getSuccessors(node):
+          if successor not in visited:
+              setActions = actions + (action,)
+              edge.push((successor, setActions), problem.getCostOfActions(setActions) + heuristic(successor, problem))
+          visited.append(successor)
 
   util.raiseNotDefined()
     

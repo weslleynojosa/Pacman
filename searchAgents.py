@@ -399,6 +399,7 @@ def foodHeuristic(state, problem):
   """
   position, foodGrid = state
   "*** YOUR CODE HERE ***"
+
   return 0
   
 class ClosestDotSearchAgent(SearchAgent):
