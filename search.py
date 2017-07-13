@@ -5,6 +5,7 @@ by Pacman agents (in searchAgents.py).
 
 import util
 
+
 class SearchProblem:
   """
   This class outlines the structure of a search problem, but doesn't implement
@@ -100,12 +101,13 @@ def breadthFirstSearch(problem):
               if problem.isGoalState(successor):
                   return actions + [action]
               edge.push((successor, actions + [action]))
+  print 'fim'
   util.raiseNotDefined()
       
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
   "*** YOUR CODE HERE ***"
-  node = (problem.getStartState(), [])
+  node = (problem.getStartState(), ())
   if problem.isGoalState(node):
       return node
   edge = util.PriorityQueue()
@@ -118,11 +120,11 @@ def uniformCostSearch(problem):
       visited.append(node)
       for successor, action, stepCost in problem.getSuccessors(node):
           if successor not in visited:
-              edge.push((successor, actions), problem.getCostOfActions(action))
+              new_actions = actions + (action,)
+              edge.push((successor, new_actions), problem.getCostOfActions(new_actions))
           visited.append(successor)
 
   util.raiseNotDefined()
-
 
 def nullHeuristic(state, problem=None):
   """
@@ -134,6 +136,8 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
   "Search the node that has the lowest combined cost and heuristic first."
   "*** YOUR CODE HERE ***"
+
+
   util.raiseNotDefined()
     
   
