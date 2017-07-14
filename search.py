@@ -136,8 +136,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
   "Search the node that has the lowest combined cost and heuristic first."
   "*** YOUR CODE HERE ***"
   node = (problem.getStartState(), ())
-  if problem.isGoalState(node):
-      return node
   edge = util.PriorityQueue()
   edge.push(node, heuristic(problem.getStartState(), problem))
   visited = []
@@ -153,6 +151,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
           visited.append(successor)
 
   util.raiseNotDefined()
+
     
   
 # Abbreviations
